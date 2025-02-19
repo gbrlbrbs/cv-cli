@@ -1,14 +1,14 @@
 import cv2
 from pathlib import Path
-import time
+# import time
 
 
 def preprocess_frame(f: cv2.Mat):
     gray = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
-    filtered = cv2.bilateralFilter(f, 9, 10, 15)
+    filtered = cv2.bilateralFilter(f, 2, 100, 100)
 
     # edges
-    edged = cv2.Canny(filtered, 30, 100)
+    edged = cv2.Canny(filtered, 30, 80)
     return gray, edged
 
 def process_video(path: str, frame_skip=4):
@@ -36,9 +36,9 @@ def process_video(path: str, frame_skip=4):
 
     print(f"Duration: {duration:.2f} seconds; {frame_count} frames")
 
-    detected_plates = set()
+    # detected_plates = set()
     frame_n = 0
-    start = time.time()
+    # start = time.time()
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -47,5 +47,11 @@ def process_video(path: str, frame_skip=4):
         
         if frame_n % frame_skip == 0:
             gray, edged = preprocess_frame(frame)
+            # cv2.imshow("Grayscale", gray)
+            resize_to_show = cv2.resize(edged, (1920, 1080))
+            cv2.imshow("Edges", resize_to_show)
+
+            if cv2.waitKey(1) == ord('q'):
+                break
 
 

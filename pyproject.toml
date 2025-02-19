@@ -7,3 +7,10 @@ requires-python = ">=3.11"
 dependencies = [
     "opencv-python>=4.11.0.86",
 ]
+
+[project.scripts]
+cli = "cv_cli:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

@@ -172,3 +172,5 @@ cython_debug/
 
 # model files
 *.pt
+
+notebooks/License-Plate-Recognition-8

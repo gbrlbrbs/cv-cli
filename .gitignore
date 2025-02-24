@@ -176,3 +176,4 @@ cython_debug/
 License-Plate-Recognition-8
 
 .direnv
+*.torchscript

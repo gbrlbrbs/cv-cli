@@ -170,10 +170,9 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# model files
-*.pt
+# model file
+yolov8n.pt
 
 License-Plate-Recognition-8
 
 .direnv
-*.torchscript

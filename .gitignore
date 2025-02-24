@@ -174,3 +174,5 @@ cython_debug/
 *.pt
 
 notebooks/License-Plate-Recognition-8
+
+.direnv

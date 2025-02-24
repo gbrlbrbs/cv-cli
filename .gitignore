@@ -173,6 +173,6 @@ cython_debug/
 # model files
 *.pt
 
-notebooks/License-Plate-Recognition-8
+License-Plate-Recognition-8
 
 .direnv

@@ -17,6 +17,7 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          bashInteractive
           cudatoolkit
           cudaPackages.cudnn
           cudaPackages.cuda_cudart

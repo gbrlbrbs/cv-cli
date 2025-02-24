@@ -1,8 +1,8 @@
 task: detect
 mode: train
 model: yolov8n.pt
-data: /home/gabrielmartinz/Projects/cv-cli/notebooks/License-Plate-Recognition-8/data.yaml
-epochs: 100
+data: /home/gbrlbrbs/Projects/cv-cli/License-Plate-Recognition-8/data.yaml
+epochs: 300
 time: null
 patience: 100
 batch: 16
@@ -10,7 +10,7 @@ imgsz: 640
 save: true
 save_period: -1
 cache: false
-device: null
+device: cuda
 workers: 8
 project: null
 name: train
@@ -103,4 +103,4 @@ erasing: 0.4
 crop_fraction: 1.0
 cfg: null
 tracker: botsort.yaml
-save_dir: /home/gabrielmartinz/Projects/cv-cli/runs/detect/train
+save_dir: /home/gbrlbrbs/Projects/cv-cli/runs/detect/train

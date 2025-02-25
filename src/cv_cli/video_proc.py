@@ -34,7 +34,7 @@ def detect_license_plates(
             roi = frame[int(y1) : int(y2), int(x1) : int(x2)]
             license_plates: Results = license_plate_detection(roi)[0]
             for plate in license_plates.boxes.data.tolist():
-                px1, px2, py1, py2, pscore, _ = plate
+                px1, py1, px2, py2, pscore, _ = plate
                 plate_frame = roi[int(py1) : int(py2), int(px1) : int(px2)]
                 lp = LicensePlate(
                     frame=plate_frame, track_id=int(track_id), score=pscore

@@ -16,8 +16,8 @@ def main() -> None:
     ap.add_argument(
         "-f",
         "--frame-skip",
-        help="Process every frame-skip frames. Defaults to 4.",
-        default=4,
+        help="Process every frame-skip frames. Defaults to 10.",
+        default=10,
         type=int,
     )
     args = ap.parse_args()

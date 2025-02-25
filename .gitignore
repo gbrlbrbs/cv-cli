@@ -173,6 +173,6 @@ cython_debug/
 # model file
 yolov8n.pt
 
-License-Plate-Recognition-8
+License-Plate-Recognition-*
 
 .direnv

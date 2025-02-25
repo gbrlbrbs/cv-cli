@@ -1,8 +1,8 @@
 task: detect
 mode: train
-model: /home/gbrlbrbs/Projects/cv-cli/runs/detect/train/weights/best.pt
+model: yolo11n.pt
 data: /home/gbrlbrbs/Projects/cv-cli/License-Plate-Recognition-4/data.yaml
-epochs: 1
+epochs: 10
 time: null
 patience: 100
 batch: 16
@@ -13,7 +13,7 @@ cache: false
 device: cuda
 workers: 8
 project: null
-name: train6
+name: train
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -103,4 +103,4 @@ erasing: 0.4
 crop_fraction: 1.0
 cfg: null
 tracker: botsort.yaml
-save_dir: /home/gbrlbrbs/Projects/cv-cli/runs/detect/train6
+save_dir: /home/gbrlbrbs/Projects/cv-cli/runs/detect/train

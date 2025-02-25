@@ -11,7 +11,7 @@ def main() -> None:
         "-m",
         "--model",
         help="Path to retrained model, if blank it defaults to ./runs/detect/train/weights/best.pt",
-        default="./runs/detect/train6/weights/best.pt",
+        default="./runs/detect/train/weights/best.pt",
     )
     ap.add_argument(
         "-f",

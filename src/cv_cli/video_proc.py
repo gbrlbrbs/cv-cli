@@ -65,7 +65,7 @@ def preprocess_license_plate(lp: LicensePlate):
     gray = cv2.cvtColor(lp.frame, cv2.COLOR_BGR2GRAY)
 
     thresh = cv2.adaptiveThreshold(
-        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2
+        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 19, 4
     )
     return gray, thresh
 

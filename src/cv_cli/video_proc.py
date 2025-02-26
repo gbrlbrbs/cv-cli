@@ -3,6 +3,8 @@ from pathlib import Path
 from ultralytics import YOLO
 from ultralytics.engine.results import Results
 from dataclasses import dataclass
+import easyocr
+import torch
 
 VEHICLE_CLASS_IDS = (2, 3, 5, 7)
 
@@ -14,13 +16,16 @@ class LicensePlate:
     score: float
 
     def save(self, filename: str | None = None):
-        if self.frame.size != 0:
+        if self.has_frame():
             if filename:
                 cv2.imwrite(f"{filename}.jpg", self.frame)
             else:
                 cv2.imwrite(f"{self.track_id}.jpg", self.frame)
         else:
-            print('No frame to save!')
+            print("No frame to save!")
+
+    def has_frame(self):
+        return self.frame.size != 0
 
 
 def detect_license_plates(
@@ -44,6 +49,25 @@ def detect_license_plates(
                     f"license plate at bounding box ({py1}, {px1}) ({py2}, {px2}), track_id={track_id}"
                 )
     return license_plate_objs
+
+
+def read_license_plate(frame: cv2.Mat, reader: easyocr.Reader):
+    detections = reader.readtext(frame)
+
+    for det in detections:
+        _, text, _ = det
+        return text.upper()
+
+    return None
+
+
+def preprocess_license_plate(lp: LicensePlate):
+    gray = cv2.cvtColor(lp.frame, cv2.COLOR_BGR2GRAY)
+
+    thresh = cv2.adaptiveThreshold(
+        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2
+    )
+    return gray, thresh
 
 
 def process_video(path: str, model_path: str, frame_skip: int):
@@ -74,6 +98,8 @@ def process_video(path: str, model_path: str, frame_skip: int):
     frame_n = 0
     model_file = Path(model_path).resolve()
     car_detection = YOLO("yolov8s.pt")
+    gpu_available = torch.cuda.is_available()
+    reader = easyocr.Reader(["en"], gpu=gpu_available)
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -82,8 +108,12 @@ def process_video(path: str, model_path: str, frame_skip: int):
         if frame_n % frame_skip == 0:
             detections = car_detection.track(frame, persist=True)[0]
             license_plates = detect_license_plates(frame, detections, model_file)
-            for plate in license_plates:
-                plate.save()
+            for i, plate in enumerate(license_plates):
+                if plate.has_frame():
+                    _, thresh = preprocess_license_plate(plate)
+                    text = read_license_plate(thresh, reader)
+                    print(text)
+
         frame_n += 1
 
     cap.release()
